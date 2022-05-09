@@ -16,7 +16,12 @@ var frames = 0;
 var frame_number = 0;
 var x_start = 0;
 var y_start = 0;
+var x_end = 0;
+var y_end = 0;
 var indice = 0;
+
+let enableAnimation = true;
+let segmentoDibujado = 0;
 
 // Rectangle image
 var rectangle = new Image();
@@ -28,6 +33,17 @@ var Marker = function () {
 }
 
 const Markers = new Array();
+
+const BallPosition = new Array();
+
+let MovementData = function () {
+    this.xStart = 0;
+    this.yStart = 0;
+    this.dX = 0;
+    this.dY = 0;
+    this.velocity = 0;
+    this.distance = 0
+}
 
 var mouseClicked = function (mouse) {
     // Get corrent mouse coords
@@ -42,62 +58,79 @@ var mouseClicked = function (mouse) {
     marker.XPos = mouseXPos;
     marker.YPos = mouseYPos;
 
+    let movementData = new MovementData();
+
     // Limito el número de marcadores a 2
-    if (indice < 10){
-        indice++;
-        Markers.push(marker);
-    }
-    if (indice==1){
+    indice++;
+    Markers.push(marker);
+    console.log(Markers)
+
+
+    //BallPosition[Markers.length - 1].yStart = Markers[Markers.length - 1].YPos;
+    movementData.xStart = Markers[Markers.length - 1].XPos;
+    movementData.yStart = Markers[Markers.length - 1].YPos;
+    if (indice == 1) {
         x_start = Markers[0].XPos;
         y_start = Markers[0].YPos;
         x = x_start;
         y = y_start;
     }
-    if (indice >= 2){
+    if (indice >= 2) {
         //dx = (Markers[1].XPos-Markers[0].XPos)/50;
         //dy = (Markers[1].YPos-Markers[0].YPos)/50;
-        distance = Math.sqrt(Math.pow(Markers[1].XPos-Markers[0].XPos,2) + Math.pow(Markers[1].YPos-Markers[0].YPos,2))
+        x_end = Markers[1].XPos;
+        y_end = Markers[1].YPos;
+        distance = Math.sqrt(Math.pow(Markers[Markers.length - 1].XPos - Markers[Markers.length - 2].XPos, 2) + Math.pow(Markers[Markers.length - 1].YPos - Markers[Markers.length - 2].YPos, 2))
+
         console.log(distance);
-        time = distance/velocity;
-        dx = (Markers[1].XPos-Markers[0].XPos)/time;
-        dy = (Markers[1].YPos-Markers[0].YPos)/time;
+        time = distance / velocity;
+        dx = (Markers[Markers.length - 1].XPos - Markers[Markers.length - 2].XPos) / time;
+        dy = (Markers[Markers.length - 1].YPos - Markers[Markers.length - 2].YPos) / time;
+
         frames = time;
         console.log(frames);
     }
+    movementData.distance = distance;
+    movementData.dX = dx;
+    movementData.dY = dy;
+    movementData.velocity = velocity;
+    BallPosition.push(movementData);
+    console.log("movementData", movementData);
+    console.log("BallPosition", BallPosition);
 }
 
 // Add mouse click event listener to canvas
 canvas.addEventListener("mousedown", mouseClicked, false);
 
 var main = function () {
-        draw();
+    draw();
 };
 
-function drawMarker(x,y,number) {
+function drawMarker(x, y, number) {
     context.beginPath();
-    context.arc(x, y, 15, 0, Math.PI*2);
+    context.arc(x, y, 15, 0, Math.PI * 2);
     context.fillStyle = "deeppink";
     context.fill();
     context.fillStyle = "#000";
     context.font = "12px Arial";
-    context.fillText(number.toString(),x-4,y+4)
+    context.fillText(number.toString(), x - 4, y + 4)
     context.closePath();
 }
 
-function drawBall(x,y) {
+function drawBall(x, y) {
     context.beginPath();
-    context.arc(x, y, 30, 0, Math.PI*2);
+    context.arc(x, y, 15, 0, Math.PI * 2);
     context.fillStyle = "#0095DD";
     context.fill();
     context.closePath();
 }
 
-function drawLine(x1,y1,x2,y2) {
+function drawLine(x1, y1, x2, y2) {
     context.beginPath();
     context.setLineDash([5, 15]);
     context.moveTo(x1, y1);
     context.lineTo(x2, y2);
-    context.stroke(); 
+    context.stroke();
 }
 
 var draw = function () {
@@ -108,27 +141,50 @@ var draw = function () {
     context.drawImage(rectangle, 0, 0, 960, 540);
 
     // Draw markers
-    
-    if (frame_number > frames){
-        x=x_start;
-        y=y_start;
-        console.log(x)
-        console.log(y)
-        frame_number=0;
-    }
-    if(indice>=2){
+    /*
+        if (frame_number > frames) { //reset animación
+            x = x_start;
+            y = y_start;
+            console.log(BallPosition)
+            console.log(y)
+            frame_number = 0;
+            //enableAnimation = false;
+        } */
+    /*
+        if ((x > x_end || y > y_end) && Markers.length > 1) { //reset animación
+            console.log("entro aqui")
+            segmentoDibujado++;
+            x = Markers[segmentoDibujado].XPos;
+            y = Markers[segmentoDibujado].YPos;;
+            console.log(x)
+            console.log(y)
+            frame_number = 0;
+            //enableAnimation = false;
+        } */
+    if (Markers.length >= 2 && enableAnimation) { //cambiar a "al pulsar botón"
         frame_number++;
         //console.log(frame_number);
-        drawLine(x_start,y_start,Markers[1].XPos,Markers[1].YPos)
-        drawBall(x,y);
-        
+        //drawLine(x_start,y_start,Markers[1].XPos,Markers[1].YPos)
+        drawBall(x, y);
+        if(frame_number>BallPosition[segmentoDibujado+1]?.distance/BallPosition[segmentoDibujado+1]?.velocity) {
+            segmentoDibujado++;
+            dx = BallPosition[segmentoDibujado].dX;
+            dy = BallPosition[segmentoDibujado].dY;
+            frame_number = 0;
+        }
         x += dx;
         y += dy;
-    }  
+    }
     for (var i = 0; i < Markers.length; i++) {
         var tempMarker = Markers[i];
         // Draw marker
-        drawMarker(tempMarker.XPos,tempMarker.YPos,i+1);
+        drawMarker(tempMarker.XPos, tempMarker.YPos, i + 1);
+
+    }
+    for (var i = 0; i < Markers.length - 1; i++) {
+        if (Markers.length > 1) {
+            drawLine(Markers[i].XPos, Markers[i].YPos, Markers[i + 1].XPos, Markers[i + 1].YPos)
+        }
     }
 };
 
