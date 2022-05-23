@@ -4,6 +4,17 @@ var context = canvas.getContext("2d");
 canvas.width = 960;
 canvas.height = 540;
 
+document.getElementById('toggleAnimation').addEventListener('click', function () {
+    enableAnimation = !enableAnimation;
+    dx = BallPosition[1].dX;
+    dy = BallPosition[1].dY;
+    x = BallPosition[0].xStart;
+    y = BallPosition[0].yStart;
+    segmentoDibujado = 0;
+    console.log(BallPosition.length);
+    frame_number = 0;
+});
+
 // Initialize variables
 var x = 0;
 var y = 0;
@@ -20,7 +31,7 @@ var x_end = 0;
 var y_end = 0;
 var indice = 0;
 
-let enableAnimation = true;
+let enableAnimation = false;
 let segmentoDibujado = 0;
 
 // Rectangle image
@@ -42,7 +53,8 @@ let MovementData = function () {
     this.dX = 0;
     this.dY = 0;
     this.velocity = 0;
-    this.distance = 0
+    this.distance = 0;
+    this.time = 0;
 }
 
 var mouseClicked = function (mouse) {
@@ -94,6 +106,7 @@ var mouseClicked = function (mouse) {
     movementData.dX = dx;
     movementData.dY = dy;
     movementData.velocity = velocity;
+    movementData.time = time;
     BallPosition.push(movementData);
     console.log("movementData", movementData);
     console.log("BallPosition", BallPosition);
@@ -140,6 +153,18 @@ var draw = function () {
 
     context.drawImage(rectangle, 0, 0, 960, 540);
 
+    for (var i = 0; i < Markers.length - 1; i++) {
+        if (Markers.length > 1) {
+            drawLine(Markers[i].XPos, Markers[i].YPos, Markers[i + 1].XPos, Markers[i + 1].YPos)
+        }
+    }
+    for (var i = 0; i < Markers.length; i++) {
+        var tempMarker = Markers[i];
+        // Draw marker
+        drawMarker(tempMarker.XPos, tempMarker.YPos, i + 1);
+
+    }
+
     // Draw markers
     /*
         if (frame_number > frames) { //reset animación
@@ -163,29 +188,31 @@ var draw = function () {
         } */
     if (Markers.length >= 2 && enableAnimation) { //cambiar a "al pulsar botón"
         frame_number++;
+
         //console.log(frame_number);
         //drawLine(x_start,y_start,Markers[1].XPos,Markers[1].YPos)
         drawBall(x, y);
-        if(frame_number>BallPosition[segmentoDibujado+1]?.distance/BallPosition[segmentoDibujado+1]?.velocity) {
+        if (frame_number > BallPosition[segmentoDibujado + 1]?.time) {
             segmentoDibujado++;
-            dx = BallPosition[segmentoDibujado].dX;
-            dy = BallPosition[segmentoDibujado].dY;
+            console.log(segmentoDibujado)
+            if (segmentoDibujado + 1 == BallPosition.length) {
+                console.log('termino');
+                enableAnimation = false;
+                segmentoDibujado = 0;
+                x = BallPosition[0].xStart;
+                y = BallPosition[0].yStart;
+            }
+            x = BallPosition[segmentoDibujado].xStart;
+            y = BallPosition[segmentoDibujado].yStart;
+            dx = BallPosition[segmentoDibujado + 1].dX;
+            dy = BallPosition[segmentoDibujado + 1].dY;
             frame_number = 0;
         }
         x += dx;
         y += dy;
     }
-    for (var i = 0; i < Markers.length; i++) {
-        var tempMarker = Markers[i];
-        // Draw marker
-        drawMarker(tempMarker.XPos, tempMarker.YPos, i + 1);
-
-    }
-    for (var i = 0; i < Markers.length - 1; i++) {
-        if (Markers.length > 1) {
-            drawLine(Markers[i].XPos, Markers[i].YPos, Markers[i + 1].XPos, Markers[i + 1].YPos)
-        }
-    }
+    
+    
 };
 
 setInterval(main, (1000 / 120)); // Refresh 30 times a second
