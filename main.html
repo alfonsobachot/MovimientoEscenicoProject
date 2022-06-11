@@ -1,5 +1,43 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<canvas id="Canvas"></canvas>
-<button id=toggleAnimation>Start</button>
+
+<head>
+    <link rel="stylesheet" href="main.css">
+</head>
+<div class="mainWrapper">
+    <div class="beatWrapper">
+        <div class="beatCounter">TIME:
+        <p id="beats">0</p>
+        </div>
+        <canvas id="Canvas" class="canvas"></canvas>
+    </div>
+
+    <div id="buttonWrapper" class="buttonWrapper">
+
+    </div>
+
+</div>
+<div class="footer">
+    <button id=toggleAnimation class="buttonStart">Play</button>
+    <button id="createNewDancer" class="buttonNewDancer">Create new dancer</button>
+    <div class="activeDancerWrapper">Active dancer:&nbsp; <div id="activeDancer">1</div>
+    </div>
+    <button id="deleteLastMarker" class="buttonDelete">Delete last position</button>
+</div>
+<div id="footer-dancer" class="footer-dancer">
+    <button id=dancer-1 class="dancer">Dancer 1</button>
+</div>
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Choose the dimensions: </p>
+        <p>Heigth: </p><input id="mainHeight" placeholder="5"></input>
+        <p>Width: </p><input id="mainWidth" placeholder="10"></input>
+        </br></br><button id="accept">Aceptar</button>
+
+    </div>
+
+</div>
 <script src="canvas.js"></script>
