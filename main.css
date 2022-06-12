@@ -1,169 +1,178 @@
 .canvas {
-    display: block;
-    height: 540px;
-    width: 960px;
+  display: block;
+  height: 540px;
+  width: 960px;
 }
 
 .mainWrapper {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .buttonWrapper {
-    display: flex;
-    flex-direction: column;
-    margin: 0 20px;
-    height: 540px;
-    width: 340px;
-    overflow-y: auto;
-    margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+  height: 540px;
+  width: 340px;
+  overflow-y: auto;
+  margin-top: 26px;
 }
 
 .buttonStart {
-    height: 30px;
+  height: 30px;
 }
 
 .inputVelocity {
-    width: 50px;
-    text-align: right;
+  width: 50px;
+  text-align: right;
 }
 
 .textVelocity {
-    margin: 0;
-    margin-right: 10px;
-    
+  margin: 0;
+  margin-right: 10px;
 }
 
 .buttonDelete {
-    height: 30px;
+  height: 30px;
 }
 
 .wrapperVelocity-0 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 12px;
-    background-color: deeppink;
-    padding: 6px;
-    border-radius: 6px;
-    width: 300px;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+  background-color: deeppink;
+  padding: 6px;
+  border-radius: 6px;
+  width: 300px;
+  justify-content: space-between;
 }
 
 .wrapperVelocity-1 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 12px;
-    background-color: lightblue;
-    padding: 6px;
-    border-radius: 6px;
-    width: 300px;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+  background-color: lightblue;
+  padding: 6px;
+  border-radius: 6px;
+  width: 300px;
+  justify-content: space-between;
 }
 
 .wrapperVelocity-2 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 12px;
-    background-color: lightgreen;
-    padding: 6px;
-    border-radius: 6px;
-    width: 300px;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+  background-color: lightgreen;
+  padding: 6px;
+  border-radius: 6px;
+  width: 300px;
+  justify-content: space-between;
 }
 
 .wrapperVelocity-3 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 12px;
-    background-color: coral;
-    padding: 6px;
-    border-radius: 6px;
-    width: 300px;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+  background-color: coral;
+  padding: 6px;
+  border-radius: 6px;
+  width: 300px;
+  justify-content: space-between;
 }
 
 .wrapperVelocity-4 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 12px;
-    background-color: lightyellow;
-    padding: 6px;
-    border-radius: 6px;
-    width: 300px;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+  background-color: lightyellow;
+  padding: 6px;
+  border-radius: 6px;
+  width: 300px;
+  justify-content: space-between;
 }
 
 .footer {
-    margin-top: 20px;
-    display: flex;
-    width: 960px;
-    justify-content: space-between;
+  margin-top: 20px;
+  display: flex;
+  width: 960px;
+  justify-content: space-between;
 }
 
 .footer-dancer {
-    margin-top: 20px;
-    display: flex;
-    width: 960px;
-    justify-content: start;
+  margin-top: 20px;
+  display: flex;
+  width: 960px;
+  justify-content: start;
 }
 
 .activeDancerWrapper {
-    display: flex;
+  display: flex;
 }
 
 .beatWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #beats {
-    margin: 0 0 8px 8px;
+  margin: 0 0 8px 8px;
 }
 
 .beatCounter {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+}
+
+.bpmWrapper {
+    margin-left: 128px;
 }
 
 .modal {
-    display:block; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content/Box */
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 40%; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modalInside {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

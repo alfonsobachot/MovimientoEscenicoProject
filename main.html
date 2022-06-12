@@ -7,7 +7,7 @@
 <div class="mainWrapper">
     <div class="beatWrapper">
         <div class="beatCounter">TIME:
-        <p id="beats">0</p>
+            <p id="beats">0</p>
         </div>
         <canvas id="Canvas" class="canvas"></canvas>
     </div>
@@ -32,9 +32,17 @@
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
-        <p>Choose the dimensions: </p>
-        <p>Heigth: </p><input id="mainHeight" placeholder="5"></input>
-        <p>Width: </p><input id="mainWidth" placeholder="10"></input>
+        <div class="modalInside">
+            <div>
+                <p>Choose the dimensions: </p>
+                <p>Heigth: </p><input id="mainHeight" placeholder="5"></input>
+                <p>Width: </p><input id="mainWidth" placeholder="10"></input>
+            </div>
+            <div class="bpmWrapper">
+                <p>Choose the bpm: </p>
+                <p>BPM: </p><input id="mainBPM" placeholder="60"></input>
+            </div>
+        </div>
         </br></br><button id="accept">Aceptar</button>
 
     </div>

@@ -8,9 +8,11 @@ var accept = document.getElementById("accept");
 
 var mainHeight = document.getElementById("mainHeight");
 var mainWidth = document.getElementById("mainWidth");
+let mainBPM = document.getElementById("mainBPM");
 
 mainHeight.value = "5";
 mainWidth.value = "10";
+mainBPM.value = "60";
 
 var button = [];
 var inputVelocity = [];
@@ -21,9 +23,11 @@ span.onclick = function () {
 };
 
 accept.onclick = function () {
+  bpmRatio = mainBPM.value/60;
   drawGrid(mainHeight.value, mainWidth.value);
   modal.style.display = "none";
 };
+
 
 canvas.width = 960;
 canvas.height = 540;
@@ -56,7 +60,7 @@ const addDiv = function (dancerIndex) {
     "-" +
     (dancer[dancerIndex].length + 1) +
     ": ";
-  inputVelocity[indice].value = 60;
+  inputVelocity[indice].value = 8;
   document.getElementById("buttonWrapper").appendChild(wrapperVelocity[indice]);
   document
     .getElementById("wrapperVelocity-" + indice)
@@ -137,16 +141,16 @@ const updateVelocity = function () {
     let oldVelocity = dancer[dancerIndex][i + 1].velocity;
     let oldTime = dancer[dancerIndex][i + 1].time;
     let oldDistance = dancer[dancerIndex][i + 1].distance;
-    let newVelocity = oldDistance / arrayVelocity[i].value;
+    let newVelocity = oldDistance / arrayVelocity[i].value/(60/bpmRatio);
     let velocityRatio = newVelocity / oldVelocity;
     dancer[dancerIndex][i + 1].velocity = newVelocity;
-    dancer[dancerIndex][i + 1].time = arrayVelocity[i].value;
+    dancer[dancerIndex][i + 1].time = arrayVelocity[i].value*60/bpmRatio;
     dancer[dancerIndex][i + 1].dX =
       dancer[dancerIndex][i + 1].dX * velocityRatio;
     dancer[dancerIndex][i + 1].dY =
       dancer[dancerIndex][i + 1].dY * velocityRatio;
   }
-  console.log(BallPosition);
+  console.log(bpmRatio);
 };
 
 const drawGrid = function (height, width) {
@@ -177,6 +181,7 @@ document
       x = dancer[dancerIndex][0].xStart;
       y = dancer[dancerIndex][0].yStart;
       total_frames = 0;
+      bpmTotal = 0;
       segmentoDibujado = 0;
       frame_number = 0;
     }
@@ -215,6 +220,8 @@ var y_end = 0;
 var indice = 0;
 
 let total_frames = 0;
+let bpmTotal = 0;
+let bpmRatio = mainBPM.value/60;
 
 let enableAnimation = false;
 let segmentoDibujado = 0;
@@ -430,6 +437,10 @@ var draw = function () {
     //cambiar a "al pulsar botón"
     frame_number++;
     total_frames++;
+    if (total_frames === 60/bpmRatio) {
+      bpmTotal++;
+      total_frames = 0;
+    }
     
     //console.log(frame_number);
     //drawLine(x_start,y_start,Markers[1].XPos,Markers[1].YPos)
@@ -452,7 +463,7 @@ var draw = function () {
     }
     x += dx;
     y += dy;
-    document.getElementById("beats").innerHTML = total_frames;
+    document.getElementById("beats").innerHTML = bpmTotal;
   }
 
   // dancer
