@@ -20,7 +20,12 @@
 }
 
 .buttonStart {
-  height: 30px;
+  height: 40px;
+  width: 80px;
+  font-size: 24px;
+  background-color: green;
+  border-radius: 8px;
+  color: white;
 }
 
 .inputVelocity {
@@ -34,7 +39,11 @@
 }
 
 .buttonDelete {
-  height: 30px;
+  height: 40px;
+  padding: 0 16px;
+  background-color: red;
+  border-radius: 8px;
+  color: white;
 }
 
 .wrapperVelocity-0 {
@@ -113,6 +122,8 @@
 
 .activeDancerWrapper {
   display: flex;
+  align-items: center;
+  font-size: 24px;
 }
 
 .beatWrapper {
@@ -125,6 +136,32 @@
   margin: 0 0 8px 8px;
 }
 
+#dancer-1 {
+  background-color: deeppink;
+}
+
+#dancer-2 {
+  background-color: lightblue;
+}
+
+#dancer-3 {
+  background-color: lightgreen;
+}
+
+#dancer-4 {
+  background-color: coral;
+}
+
+#dancer-5 {
+  background-color: lightyellow;
+}
+
+.dancer {
+  margin-right: 16px;
+  padding: 12px;
+  border-radius: 8px;
+}
+
 .beatCounter {
   display: flex;
   flex-direction: row;
@@ -132,6 +169,11 @@
 
 .bpmWrapper {
     margin-left: 128px;
+}
+
+.buttonNewDancer {
+  height: 40px;
+  padding: 0 16px;
 }
 
 .modal {

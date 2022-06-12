@@ -86,7 +86,7 @@ const switchDancer = function (dancerNumber) {
   for (i = 0; i < divsMovementIndex.length; i++) {
     divsMovementIndex[i].style.display = "flex";
   }
-  console.log(dancerIndex, dancerNumber);
+  console.log('active dancer',dancerIndex, dancerNumber);
   document.getElementById("activeDancer").innerHTML = dancerNumber;
   x = dancer[dancerIndex][dancer[dancerIndex].length - 1].xStart;
   y = dancer[dancerIndex][dancer[dancerIndex].length - 1].yStart;
@@ -103,16 +103,18 @@ const createNewDancer = function () {
     dancerIndex = dancer.length;
     document.getElementById("activeDancer").innerHTML = dancerIndex + 1;
     newDancer = document.createElement("button");
-    newDancer.setAttribute("id", dancerIndex + 1);
+    newDancer.setAttribute("id", "dancer-"+(dancerIndex + 1));
     newDancer.setAttribute("class", "dancer");
     newDancer.innerHTML = "Dancer " + (dancerIndex + 1);
     document.getElementById("footer-dancer").appendChild(newDancer);
     document
-      .getElementById(dancerIndex + 1)
+      .getElementById('dancer-'+(dancerIndex + 1))
       .addEventListener("click", function () {
-        let id = parseInt(this.id);
+        let id = parseInt(this.id.split("-")[1]);
+        console.log('id',id, dancerIndex);
+        console.log('dancerIndex',dancerIndex, id);
         switchDancer(id);
-        console.log(dancerIndex, id);
+        
       });
     dancer.push([]);
   }
@@ -120,12 +122,12 @@ const createNewDancer = function () {
 
 const deleteLastMarker = function () {
   let divToRemove = document.getElementsByClassName("wrapperVelocity-"+dancerIndex);
-  console.log(divToRemove[0]);
+  //console.log(divToRemove[0]);
   // if (indice > 0) {
   //Markers.pop();
   //BallPosition.pop();
-  button[indice]?.remove();
-  inputVelocity[indice]?.remove();
+  //button[indice]?.remove();
+  //inputVelocity[indice]?.remove();
   //wrapperVelocity[indice]?.remove();
   divToRemove[divToRemove.length-1]?.remove();
 
