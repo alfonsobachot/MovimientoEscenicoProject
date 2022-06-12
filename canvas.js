@@ -105,7 +105,7 @@ const createNewDancer = function () {
     newDancer = document.createElement("button");
     newDancer.setAttribute("id", "dancer-"+(dancerIndex + 1));
     newDancer.setAttribute("class", "dancer");
-    newDancer.innerHTML = "Dancer " + (dancerIndex + 1);
+    newDancer.innerHTML = "Performer " + (dancerIndex + 1);
     document.getElementById("footer-dancer").appendChild(newDancer);
     document
       .getElementById('dancer-'+(dancerIndex + 1))

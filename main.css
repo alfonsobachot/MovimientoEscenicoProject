@@ -28,6 +28,12 @@
   color: white;
 }
 
+.userManual {
+  display: flex;
+  height: 40px;
+  align-items: center;
+}
+
 .inputVelocity {
   width: 50px;
   text-align: right;
