@@ -1,6 +1,6 @@
 .canvas {
   display: block;
-  height: 540px;
+  height: 480;
   width: 960px;
 }
 
@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   margin: 0 20px;
-  height: 540px;
+  height: 480px;
   width: 340px;
   overflow-y: auto;
   margin-top: 26px;

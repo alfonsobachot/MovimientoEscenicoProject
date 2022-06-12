@@ -23,14 +23,16 @@ span.onclick = function () {
 };
 
 accept.onclick = function () {
-  bpmRatio = mainBPM.value/60;
+  bpmRatio = mainBPM.value / 60;
   drawGrid(mainHeight.value, mainWidth.value);
   modal.style.display = "none";
 };
 
+const MAX_WIDTH = 960;
 
 canvas.width = 960;
-canvas.height = 540;
+canvas.height = 480;
+canvas.style.height = 480;
 
 const dancerColors = [
   "deeppink",
@@ -117,12 +119,15 @@ const createNewDancer = function () {
 };
 
 const deleteLastMarker = function () {
+  let divToRemove = document.getElementsByClassName("wrapperVelocity-"+dancerIndex);
+  console.log(divToRemove[0]);
   // if (indice > 0) {
   //Markers.pop();
   //BallPosition.pop();
   button[indice]?.remove();
   inputVelocity[indice]?.remove();
-  wrapperVelocity[indice]?.remove();
+  //wrapperVelocity[indice]?.remove();
+  divToRemove[divToRemove.length-1]?.remove();
 
   // dancers
   dancer[dancerIndex].pop();
@@ -141,10 +146,10 @@ const updateVelocity = function () {
     let oldVelocity = dancer[dancerIndex][i + 1].velocity;
     let oldTime = dancer[dancerIndex][i + 1].time;
     let oldDistance = dancer[dancerIndex][i + 1].distance;
-    let newVelocity = oldDistance / arrayVelocity[i].value/(60/bpmRatio);
+    let newVelocity = oldDistance / arrayVelocity[i].value / (60 / bpmRatio);
     let velocityRatio = newVelocity / oldVelocity;
     dancer[dancerIndex][i + 1].velocity = newVelocity;
-    dancer[dancerIndex][i + 1].time = arrayVelocity[i].value*60/bpmRatio;
+    dancer[dancerIndex][i + 1].time = (arrayVelocity[i].value * 60) / bpmRatio;
     dancer[dancerIndex][i + 1].dX =
       dancer[dancerIndex][i + 1].dX * velocityRatio;
     dancer[dancerIndex][i + 1].dY =
@@ -153,19 +158,47 @@ const updateVelocity = function () {
   console.log(bpmRatio);
 };
 
+const drawScenario = function (height, width) {
+  let buttonWrapper = document.getElementById("buttonWrapper");
+  let pixelMetro = MAX_WIDTH / width;
+  canvas.height = pixelMetro * height;
+  buttonWrapper.style.height = pixelMetro*height+24+"px";
+};
+
 const drawGrid = function (height, width) {
+  let pixelMetro = MAX_WIDTH / width;
+  context.beginPath();
+  context.setLineDash([]);
+  context.moveTo(0.5, 0.5);
+  context.lineTo(0.5, pixelMetro * height-0.5);
+  context.stroke();
+  context.beginPath();
+  context.setLineDash([]);
+  context.moveTo(0.5, pixelMetro * height-0.5);
+  context.lineTo(pixelMetro * width-0.5, pixelMetro * height-0.5);
+  context.stroke();
+  context.beginPath();
+  context.setLineDash([]);
+  context.moveTo(0.5, 0.5);
+  context.lineTo(pixelMetro * width-0.5, 0.5);
+  context.stroke();
+  context.beginPath();
+  context.setLineDash([]);
+  context.moveTo(pixelMetro * width-0.5, 0.5);
+  context.lineTo(pixelMetro * width-0.5, pixelMetro * height-0.5);
+  context.stroke();
   for (i = 1; i < width; i++) {
     context.beginPath();
     context.setLineDash([]);
     context.moveTo((960 * i) / width, 0);
-    context.lineTo((960 * i) / width, 540);
+    context.lineTo((960 * i) / width, pixelMetro * height);
     context.stroke();
   }
   for (i = 1; i < height; i++) {
     context.beginPath();
     context.setLineDash([]);
-    context.moveTo(0, (540 * i) / height);
-    context.lineTo(960, (540 * i) / height);
+    context.moveTo(0, (pixelMetro * height * i) / height);
+    context.lineTo(960, (pixelMetro * height * i) / height);
     context.stroke();
   }
 };
@@ -221,7 +254,7 @@ var indice = 0;
 
 let total_frames = 0;
 let bpmTotal = 0;
-let bpmRatio = mainBPM.value/60;
+let bpmRatio = mainBPM.value / 60;
 
 let enableAnimation = false;
 let segmentoDibujado = 0;
@@ -367,8 +400,9 @@ var draw = function () {
   context.fillStyle = "white";
   context.fillRect(0, 0, canvas.width, canvas.height);
 
-  context.drawImage(rectangle, 0, 0, 960, 540);
+  //context.drawImage(rectangle, 0, 0, 960, 960);
 
+  drawScenario(mainHeight.value, mainWidth.value);
   drawGrid(mainHeight.value, mainWidth.value);
   /*
   for (var i = 0; i < Markers.length - 1; i++) {
@@ -437,11 +471,11 @@ var draw = function () {
     //cambiar a "al pulsar botón"
     frame_number++;
     total_frames++;
-    if (total_frames === 60/bpmRatio) {
+    if (total_frames === 60 / bpmRatio) {
       bpmTotal++;
       total_frames = 0;
     }
-    
+
     //console.log(frame_number);
     //drawLine(x_start,y_start,Markers[1].XPos,Markers[1].YPos)
     drawBall(x, y);
