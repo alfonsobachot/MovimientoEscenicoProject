@@ -86,7 +86,6 @@ const switchDancer = function (dancerNumber) {
   for (i = 0; i < divsMovementIndex.length; i++) {
     divsMovementIndex[i].style.display = "flex";
   }
-  console.log('active dancer',dancerIndex, dancerNumber);
   document.getElementById("activeDancer").innerHTML = dancerNumber;
   x = dancer[dancerIndex][dancer[dancerIndex].length - 1].xStart;
   y = dancer[dancerIndex][dancer[dancerIndex].length - 1].yStart;
@@ -103,40 +102,26 @@ const createNewDancer = function () {
     dancerIndex = dancer.length;
     document.getElementById("activeDancer").innerHTML = dancerIndex + 1;
     newDancer = document.createElement("button");
-    newDancer.setAttribute("id", "dancer-"+(dancerIndex + 1));
+    newDancer.setAttribute("id", "dancer-" + (dancerIndex + 1));
     newDancer.setAttribute("class", "dancer");
     newDancer.innerHTML = "Performer " + (dancerIndex + 1);
     document.getElementById("footer-dancer").appendChild(newDancer);
     document
-      .getElementById('dancer-'+(dancerIndex + 1))
+      .getElementById("dancer-" + (dancerIndex + 1))
       .addEventListener("click", function () {
         let id = parseInt(this.id.split("-")[1]);
-        console.log('id',id, dancerIndex);
-        console.log('dancerIndex',dancerIndex, id);
         switchDancer(id);
-        
       });
     dancer.push([]);
   }
 };
 
 const deleteLastMarker = function () {
-  let divToRemove = document.getElementsByClassName("wrapperVelocity-"+dancerIndex);
-  //console.log(divToRemove[0]);
-  // if (indice > 0) {
-  //Markers.pop();
-  //BallPosition.pop();
-  //button[indice]?.remove();
-  //inputVelocity[indice]?.remove();
-  //wrapperVelocity[indice]?.remove();
-  divToRemove[divToRemove.length-1]?.remove();
-
-  // dancers
+  let divToRemove = document.getElementsByClassName(
+    "wrapperVelocity-" + dancerIndex
+  );
+  divToRemove[divToRemove.length - 1]?.remove();
   dancer[dancerIndex].pop();
-
-  // indice--;
-  console.log("dancerIndex ", dancerIndex, dancer);
-  // }
 };
 
 const updateVelocity = function () {
@@ -144,9 +129,7 @@ const updateVelocity = function () {
     "inputVelocity-" + dancerIndex
   );
   for (i = 0; i < arrayVelocity.length; i++) {
-    console.log("dancerIndex", dancerIndex, i);
     let oldVelocity = dancer[dancerIndex][i + 1].velocity;
-    let oldTime = dancer[dancerIndex][i + 1].time;
     let oldDistance = dancer[dancerIndex][i + 1].distance;
     let newVelocity = oldDistance / arrayVelocity[i].value / (60 / bpmRatio);
     let velocityRatio = newVelocity / oldVelocity;
@@ -157,14 +140,13 @@ const updateVelocity = function () {
     dancer[dancerIndex][i + 1].dY =
       dancer[dancerIndex][i + 1].dY * velocityRatio;
   }
-  console.log(bpmRatio);
 };
 
 const drawScenario = function (height, width) {
   let buttonWrapper = document.getElementById("buttonWrapper");
   let pixelMetro = MAX_WIDTH / width;
   canvas.height = pixelMetro * height;
-  buttonWrapper.style.height = pixelMetro*height+24+"px";
+  buttonWrapper.style.height = pixelMetro * height + 24 + "px";
 };
 
 const drawGrid = function (height, width) {
@@ -172,22 +154,22 @@ const drawGrid = function (height, width) {
   context.beginPath();
   context.setLineDash([]);
   context.moveTo(0.5, 0.5);
-  context.lineTo(0.5, pixelMetro * height-0.5);
+  context.lineTo(0.5, pixelMetro * height - 0.5);
   context.stroke();
   context.beginPath();
   context.setLineDash([]);
-  context.moveTo(0.5, pixelMetro * height-0.5);
-  context.lineTo(pixelMetro * width-0.5, pixelMetro * height-0.5);
+  context.moveTo(0.5, pixelMetro * height - 0.5);
+  context.lineTo(pixelMetro * width - 0.5, pixelMetro * height - 0.5);
   context.stroke();
   context.beginPath();
   context.setLineDash([]);
   context.moveTo(0.5, 0.5);
-  context.lineTo(pixelMetro * width-0.5, 0.5);
+  context.lineTo(pixelMetro * width - 0.5, 0.5);
   context.stroke();
   context.beginPath();
   context.setLineDash([]);
-  context.moveTo(pixelMetro * width-0.5, 0.5);
-  context.lineTo(pixelMetro * width-0.5, pixelMetro * height-0.5);
+  context.moveTo(pixelMetro * width - 0.5, 0.5);
+  context.lineTo(pixelMetro * width - 0.5, pixelMetro * height - 0.5);
   context.stroke();
   for (i = 1; i < width; i++) {
     context.beginPath();
@@ -263,11 +245,6 @@ let segmentoDibujado = 0;
 
 let dancerIndex = 0;
 
-// Rectangle image
-var rectangle = new Image();
-rectangle.src =
-  "https://upload.wikimedia.org/wikipedia/commons/6/6b/A_sample_of_the_transparent_rectangle.svg";
-
 var Marker = function () {
   this.XPos = 0;
   this.YPos = 0;
@@ -295,8 +272,6 @@ var mouseClicked = function (mouse) {
   var mouseXPos = mouse.x - rect.left;
   var mouseYPos = mouse.y - rect.top;
 
-  console.log("Marcador añadido");
-
   // Move the marker when placed to a better location
   var marker = new Marker();
   marker.XPos = mouseXPos;
@@ -307,7 +282,6 @@ var mouseClicked = function (mouse) {
   indice++;
   Markers.push(marker);
 
-  //BallPosition[Markers.length - 1].yStart = Markers[Markers.length - 1].YPos;
   movementData.xStart = Markers[Markers.length - 1].XPos;
   movementData.yStart = Markers[Markers.length - 1].YPos;
   if (indice == 1) {
@@ -321,8 +295,6 @@ var mouseClicked = function (mouse) {
       addDiv(dancerIndex);
     }
 
-    //dx = (Markers[1].XPos-Markers[0].XPos)/50;
-    //dy = (Markers[1].YPos-Markers[0].YPos)/50;
     x_end = Markers[1].XPos;
     y_end = Markers[1].YPos;
     distance = Math.sqrt(
@@ -360,7 +332,6 @@ var mouseClicked = function (mouse) {
   movementData.time = time;
   BallPosition[BallPosition.length] = movementData;
   dancer[dancerIndex][dancer[dancerIndex].length] = movementData;
-  console.log(dancer);
 };
 
 // Add mouse click event listener to canvas
@@ -402,24 +373,10 @@ var draw = function () {
   context.fillStyle = "white";
   context.fillRect(0, 0, canvas.width, canvas.height);
 
-  //context.drawImage(rectangle, 0, 0, 960, 960);
-
   drawScenario(mainHeight.value, mainWidth.value);
   drawGrid(mainHeight.value, mainWidth.value);
-  /*
-  for (var i = 0; i < Markers.length - 1; i++) {
-    if (Markers.length > 1) {
-      drawLine(
-        Markers[i].XPos,
-        Markers[i].YPos,
-        Markers[i + 1].XPos,
-        Markers[i + 1].YPos
-      );
-    }
-  }*/
 
   for (var i = 0; i < dancer.length; i++) {
-    console.log("for inside", dancer.length);
     for (var j = 0; j < dancer[i].length - 1; j++) {
       if (dancer.length > 0) {
         drawLine(
@@ -431,15 +388,8 @@ var draw = function () {
       }
     }
   }
-  /*
-  for (var i = 0; i < Markers.length; i++) {
-    var tempMarker = Markers[i];
-    // Draw marker
-    drawMarker(tempMarker.XPos, tempMarker.YPos, i + 1);
-  }*/
 
   for (var i = 0; i < dancer.length; i++) {
-    //console.log("for inside", dancer.length);
     for (var j = 0; j < dancer[i].length; j++) {
       if (dancer.length > 0) {
         drawMarker(dancer[i][j].xStart, dancer[i][j].yStart, j + 1, i);
@@ -447,30 +397,7 @@ var draw = function () {
     }
   }
 
-  // Draw markers
-  /*
-        if (frame_number > frames) { //reset animación
-            x = x_start;
-            y = y_start;
-            console.log(BallPosition)
-            console.log(y)
-            frame_number = 0;
-            //enableAnimation = false;
-        } */
-  /*
-        if ((x > x_end || y > y_end) && Markers.length > 1) { //reset animación
-            console.log("entro aqui")
-            segmentoDibujado++;
-            x = Markers[segmentoDibujado].XPos;
-            y = Markers[segmentoDibujado].YPos;;
-            console.log(x)
-            console.log(y)
-            frame_number = 0;
-            //enableAnimation = false;
-        } */
-
   if (Markers.length >= 2 && enableAnimation) {
-    //cambiar a "al pulsar botón"
     frame_number++;
     total_frames++;
     if (total_frames === 60 / bpmRatio) {
@@ -478,8 +405,6 @@ var draw = function () {
       total_frames = 0;
     }
 
-    //console.log(frame_number);
-    //drawLine(x_start,y_start,Markers[1].XPos,Markers[1].YPos)
     drawBall(x, y);
     if (frame_number > dancer[dancerIndex][segmentoDibujado + 1]?.time) {
       segmentoDibujado++;
@@ -489,7 +414,6 @@ var draw = function () {
         segmentoDibujado = 0;
         x = dancer[dancerIndex][0].xStart;
         y = dancer[dancerIndex][0].yStart;
-        //
       }
       x = dancer[dancerIndex][segmentoDibujado].xStart;
       y = dancer[dancerIndex][segmentoDibujado].yStart;
@@ -501,33 +425,6 @@ var draw = function () {
     y += dy;
     document.getElementById("beats").innerHTML = bpmTotal;
   }
-
-  // dancer
-  /*
-  if (enableAnimation) {
-    //console.log(frame_number);
-    for (var i = 0; i < dancer.length; i++) {
-      frame_number++;
-      drawBall(x[i], y[i]);
-      console.log('indice dancer', i)
-      if (frame_number > dancer[i][segmentoDibujado + 1]?.time) {
-        segmentoDibujado++;
-        if (segmentoDibujado + 1 == dancer[0].length) {
-          enableAnimation = false;
-          segmentoDibujado = 0;
-          x[i] = dancer[i][0].xStart;
-          y[i] = dancer[i][0].yStart;
-        }
-        x[i] = dancer[i][segmentoDibujado].xStart;
-        y[i] = dancer[i][segmentoDibujado].yStart;
-        dx[i] = dancer[i][segmentoDibujado + 1].dX;
-        dy[i] = dancer[i][segmentoDibujado + 1].dY;
-        frame_number = 0;
-      }
-      x[i] += dx[i];
-      y[i] += dy[i];
-    }
-  }*/
 };
 
 setInterval(main, 1000 / 120); // Refresh 120 times a second
