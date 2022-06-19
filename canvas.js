@@ -427,4 +427,4 @@ var draw = function () {
   }
 };
 
-setInterval(main, 1000 / 60); // Refresh 120 times a second
+setInterval(main, 1000 / 59); // Refresh 120 times a second
